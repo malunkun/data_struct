@@ -33,6 +33,23 @@ void insert_head(struct node *head,int num)//链表头插法
     node->data = num;
 }
 
+void insert_tail(struct node *head,int num)//
+{
+    struct node *node,*p;
+    while(1)
+    {
+        if(NULL == head->next)
+        {
+            head->next = (struct node *)malloc(sizeof(struct node));
+            node = head->next;
+            node->next = NULL;
+            node->data = num;
+            break;
+        }
+        head = head->next;
+    }
+}
+
 void printlist(struct node *head)//打印链表
 {
     int counter = 1;
@@ -46,13 +63,26 @@ void printlist(struct node *head)//打印链表
     }
 }
 
+void freelist(struct node *head)
+{
+    while(1)
+    {
+        free(head->next);
+        head = head->next;
+        if(NULL == head)
+            break;
+    }
+}
 int main()
 {
     struct node head;
     head = createlist(55);
     insert_head(&head,23);
     insert_head(&head,22);
+    insert_tail(&head,66);
+    insert_tail(&head,200);
     printlist(&head);
+    freelist(&head);
     return 0;
 }
 
